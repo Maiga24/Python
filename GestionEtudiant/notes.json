@@ -1,0 +1,20 @@
+[
+    {
+        "id_etudiant": "2100155",
+        "code_matiere": "2",
+        "valeur_note": 16.0,
+        "date_evaluation": "2025-02-12"
+    },
+    {
+        "id_etudiant": "3",
+        "code_matiere": "MATH",
+        "valeur_note": 22.0,
+        "date_evaluation": "2025-02-12"
+    },
+    {
+        "id_etudiant": "2100155",
+        "code_matiere": "MATH",
+        "valeur_note": 16.0,
+        "date_evaluation": "2025-02-12"
+    }
+]

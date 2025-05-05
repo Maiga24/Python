@@ -1,0 +1,23 @@
+[
+    {
+        "id_etudiant": "E002",
+        "nom": "maiga",
+        "prenom": "Mamadou",
+        "date_naissance": "2000-05-04",
+        "classe": "L2 Informatique"
+    },
+    {
+        "id_etudiant": "E003",
+        "nom": "sylla",
+        "prenom": "Mamadou",
+        "date_naissance": "2000-05-04",
+        "classe": "L2 Informatique"
+    },
+    {
+        "id_etudiant": "2100155",
+        "nom": "Maiga",
+        "prenom": "Aissata",
+        "date_naissance": "24/06/2003",
+        "classe": "L4"
+    }
+]

@@ -1,0 +1,12 @@
+[
+    {
+        "code_matiere": "MATH",
+        "nom_matiere": "MATH",
+        "coefficient": 2.0
+    },
+    {
+        "code_matiere": "2",
+        "nom_matiere": "ANGLAI",
+        "coefficient": 2.0
+    }
+]

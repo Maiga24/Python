@@ -1,0 +1,136 @@
+### **Projet : Système de Gestion des Étudiants**
+
+#### **Objectif**  
+Créer un programme Python permettant de gérer les étudiants, leurs notes, leurs évaluations et leurs moyennes. Le programme doit être modulaire et utiliser des classes pour représenter les différentes entités.
+
+---
+
+### **1. Description des Fonctionnalités**
+
+Le système doit permettre :  
+1. **Gestion des étudiants** : Ajouter, modifier, supprimer et afficher les étudiants.  
+2. **Gestion des matières** : Ajouter des matières.  
+3. **Gestion des notes** : Saisir les notes des étudiants par matière.  
+4. **Calcul des moyennes** : Calculer la moyenne d'un étudiant dans une matière et sa moyenne générale.  
+5. **Génération de rapports** : Afficher le bulletin d'un étudiant.  
+6. **Sauvegarde des données** : Stocker les données dans des fichiers (`.txt` ou `.json`).  
+
+---
+
+### **2. Structures de Données à Utiliser**
+
+#### **Classe `Etudiant`**  
+Attributs :  
+- `id_etudiant` (str)  
+- `nom` (str)  
+- `prenom` (str)  
+- `date_naissance` (str)  
+- `classe` (str)  
+
+Méthodes :  
+- `__str__()` : Affiche les informations de l'étudiant.  
+
+#### **Classe `Matiere`**  
+Attributs :  
+- `code_matiere` (str)  
+- `nom_matiere` (str)  
+- `coefficient` (int)  
+
+Méthodes :  
+- `__str__()` : Affiche les informations de la matière.  
+
+#### **Classe `Note`**  
+Attributs :  
+- `id_etudiant` (str)  
+- `code_matiere` (str)  
+- `valeur_note` (float)  
+- `date_evaluation` (str)  
+
+Méthodes :  
+- `__str__()` : Affiche la note.  
+
+---
+
+### **3. Fonctionnalités à Implémenter**
+
+#### **Menu Principal (Boucle Principale)**
+Le programme doit proposer un menu interactif avec les options suivantes :  
+```
+1. Gestion des étudiants  
+2. Gestion des matières  
+3. Saisie des notes  
+4. Calcul des moyennes  
+5. Affichage des bulletins  
+6. Sauvegarder les données  
+7. Charger les données  
+8. Quitter  
+```
+
+#### **Fonctionnalités Détails :**
+1. **Gestion des Étudiants** (CRUD)  
+   - Ajouter un étudiant  
+   - Modifier un étudiant  
+   - Supprimer un étudiant  
+   - Afficher la liste des étudiants  
+
+2. **Gestion des Matières**  
+   - Ajouter une matière  
+   - Afficher la liste des matières  
+
+3. **Saisie des Notes**  
+   - Saisir une note pour un étudiant dans une matière  
+   - Modifier une note  
+
+4. **Calcul des Moyennes**  
+   - Calculer la moyenne d'un étudiant dans une matière  
+   - Calculer la moyenne générale d'un étudiant  
+
+5. **Affichage des Bulletins**  
+   - Afficher le bulletin d'un étudiant (notes + moyennes par matière + moyenne générale)  
+
+6. **Sauvegarde et Chargement**  
+   - Sauvegarder les étudiants, matières et notes dans des fichiers (`etudiants.json`, `matieres.json`, `notes.json`)  
+   - Charger les données depuis ces fichiers  
+
+---
+
+### **4. Exemple d'Interaction**
+
+#### **Exemple 1 : Ajout d'un Étudiant**
+```
+>>> Entrez le nom : Dupont
+>>> Entrez le prénom : Jean
+>>> Entrez la date de naissance (JJ/MM/AAAA) : 15/05/2000
+>>> Entrez la classe : Terminale A
+** Étudiant ajouté avec succès ! **
+```
+
+#### **Exemple 2 : Saisie d'une Note**
+```
+>>> Entrez l'ID de l'étudiant : ET001
+>>> Entrez le code de la matière : MATH
+>>> Entrez la note : 15.5
+>>> Entrez la date d'évaluation : 10/03/2024
+** Note enregistrée ! **
+```
+
+#### **Exemple 3 : Affichage d'un Bulletin**
+```
+=== Bulletin de Jean Dupont (ET001) ===
+Mathématiques (Coeff 3) : 15.5  
+Histoire (Coeff 2) : 12.0  
+Moyenne Générale : 14.1  
+```
+
+---
+
+### **5. Contraintes Techniques**
+- Utilisation de **classes** pour `Etudiant`, `Matiere` et `Note`.  
+- Utilisation de **listes/dictionnaires** pour stocker les données en mémoire.  
+- Gestion des erreurs (notes invalides, étudiants inexistants, etc.).  
+- Sauvegarde dans des fichiers (`json` recommandé).  
+
+### **6. Livrables Attendus**
+- Un script Python (`gestion_etudiants.py`).  
+- Un rapport expliquant la structure du code et les choix techniques.  
+
