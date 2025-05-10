@@ -1,0 +1,5 @@
+django
+pytesseract
+pillow
+djangorestframework
+django-storages
