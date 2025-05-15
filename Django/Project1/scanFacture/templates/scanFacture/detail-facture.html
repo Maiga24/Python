@@ -1,0 +1,189 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+    .detail-container {
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
+    }
+
+    .detail-header {
+        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 15px 15px 0 0;
+    }
+
+    .detail-body {
+        padding: 2rem;
+    }
+
+    .detail-section {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .detail-section h4 {
+        color: #2c3e50;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #e9ecef;
+    }
+
+    .info-label {
+        color: #111111FF;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+
+    .info-value {
+        color: #2c3e50;
+        font-size: 1.1rem;
+    }
+
+    .article-card {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        margin-bottom: 1rem;
+        padding: 1rem;
+    }
+
+    .article-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+    }
+
+    .btn-danger {
+        background: linear-gradient(135deg, #E74D3C71 0%, #C03A2B82 100%);
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-danger:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2);
+    }
+
+    .pdf-container {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .pdf-container iframe {
+        width: 100%;
+        height: 600px;
+        border: none;
+        border-radius: 8px;
+    }
+    .mb-3{
+        margin-bottom:20px !important;
+    }
+    .info-card{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="detail-container">
+                <div class="detail-body">
+                    <div class="detail-section">
+                        <h4>
+                            <i class="fas fa-info-circle me-2"></i>
+                            Informations générales
+                        </h4>
+                        <div class="row info-card">
+                            <div class="col-md-6 mb-3">
+                                <div class="info-label">Fournisseur</div>
+                                <div class="info-value">{{ facture.fournisseur }}</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="info-label">Numéro de facture</div>
+                                <div class="info-value">{{ facture.numero_facture }}</div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="info-label">Date de facture</div>
+                                <div class="info-value">{{ facture.date_facture|date:"d/m/Y" }}</div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="info-label">Montant HT</div>
+                                <div class="info-value">{{ facture.montant_ht }} €</div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="info-label">TVA</div>
+                                <div class="info-value">{{ facture.tva }} €</div>
+                            </div>
+                             <div class="col-md-6 mb-3">
+                                <div class="info-label">Montant TTC</div>
+                                <div class="info-value">{{ facture.montant_ttc }} €</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h4>
+                            <i class="fas fa-shopping-cart me-2"></i>
+                            Articles
+                        </h4>
+                        {% for article in facture.articles.all %}
+                            <div class="article-card ">
+                                <div class="row info-card">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="info-label">Désignation</div>
+                                        <div class="info-value">{{ article.designation }}</div>
+                                    </div>
+                                    <div class="col-md-2 mb-3">
+                                        <div class="info-label">Quantité</div>
+                                        <div class="info-value">{{ article.quantite }}</div>
+                                    </div>
+                                    <div class="col-md-2 mb-3">
+                                        <div class="info-label">Prix unitaire</div>
+                                        <div class="info-value">{{ article.prix_unitaire }} €</div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <div class="alert alert-info">
+                                Aucun article n'a été ajouté à cette facture.
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

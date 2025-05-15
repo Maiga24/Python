@@ -1,0 +1,234 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+    .factures-container {
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .factures-header {
+        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 15px 15px 0 0;
+    }
+
+    .factures-body {
+        padding: 2rem;
+    }
+
+    .facture-card {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+        border-left: 4px solid #4a90e2;
+    }
+
+    .facture-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .facture-info {
+        padding: 1.5rem;
+    }
+
+    .facture-title {
+        color: #2c3e50;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .facture-details {
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+
+    .facture-amount {
+        font-weight: 600;
+        color: #2c3e50;
+    }
+
+    .facture-date {
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+
+    .facture-actions {
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 0 10px 10px 0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .btn-action {
+        padding: 0.5rem;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        color: white;
+    }
+
+    .btn-view {
+        background: linear-gradient(135deg, #4A91E2BA 0%, #3579BDCE 100%);
+    }
+
+    .btn-edit {
+        background: linear-gradient(135deg, #2ECC70C9 0%, #27AE5FBA 100%);
+    }
+
+    .btn-delete {
+        background: linear-gradient(135deg, #E74D3CF2 0%, #C03A2BFF 100%);
+    }
+
+    .btn-action:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .pagination {
+        margin-top: 2rem;
+    }
+
+    .page-link {
+        color: #4a90e2;
+        border: none;
+        padding: 0.5rem 1rem;
+        margin: 0 0.2rem;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+
+    .page-link:hover {
+        background: #4a90e2;
+        color: white;
+    }
+
+    .page-item.active .page-link {
+        background: #4a90e2;
+        color: white;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 3rem;
+        color: #6c757d;
+    }
+
+    .empty-state i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: #dee2e6;
+    }
+    .button{
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+    }
+    
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="factures-body">
+        {% csrf_token %}
+        {% if factures %}
+            {% for facture in factures %}
+                <div class="facture-card">
+                    <div class="row g-0">
+                        <div class="col-md-9">
+                            <div class="facture-info">
+                                <h5 class="facture-title">
+                                    {{ facture.fournisseur }} - {{ facture.numero_facture }}
+                                </h5>
+                                <div class="facture-details">
+                                    <span class="facture-date">
+                                        <i class="far fa-calendar-alt me-1"></i>
+                                        {{ facture.date_facture|date:"d/m/Y" }}
+                                    </span>
+                                    <span class="ms-3">
+                                        <i class="fas fa-file-pdf me-1"></i>
+                                        {{ facture.fichier.name|default:"Aucun fichier" }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="facture-actions">
+                                <span class="facture-amount">
+                                    {{ facture.montant_ttc }} €
+                                </span>
+                                <div class="ms-auto button">
+                                    <a href="{% url 'detail_facture' facture.id %}" class="btn-action btn-view" title="Voir">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="{% url 'modifier_facture' facture.id %}" class="btn-action btn-edit" title="Modifier">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <button type="button" class="btn-action btn-delete" title="Supprimer" 
+                                            onclick="supprimerFacture({{ facture.id }})">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <i class="fas fa-file-invoice"></i>
+                <h4>Aucune facture trouvée</h4>
+                <p>Commencez par ajouter votre première facture</p>
+                <a href="{% url 'ajouter_facture' %}" class="btn btn-primary mt-3">
+                    <i class="fas fa-plus me-2"></i>
+                    Ajouter une facture
+                </a>
+            </div>
+        {% endif %}
+    </div>
+        
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function supprimerFacture(factureId) {
+        if (confirm('Êtes-vous sûr de vouloir supprimer cette facture ?')) {
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            
+            fetch(`/scanFacture/supprimer/${factureId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la suppression');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.status === 'success') {
+                    window.location.reload();
+                } else {
+                    alert('Erreur lors de la suppression de la facture');
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert('Erreur lors de la suppression de la facture');
+            });
+        }
+    }
+</script>
+{% endblock %} 
